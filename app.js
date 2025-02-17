@@ -17,6 +17,8 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 
+console.log(environment)
+
 if (!isProduction) {
   // enable cors only in development
   app.use(cors({ origin: "http://localhost:3000", credentials: true }));
