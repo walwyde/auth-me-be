@@ -1,0 +1,26 @@
+GET http://localhost:8000/api/csrf/restore HTTP/1.1
+
+####
+POST http://localhost:8000/api/users HTTP/1.1
+Accept:application/json
+Content-Type: application/json
+xsrf-token:6LpEKzyO-ZFEZZyFrDn0J56PfBPRsw2G5Ubg
+
+{
+    "email":"walwyde@gmail.com",
+    "password":"123456",
+    "firstName": "Waals",
+    "lastName": "Here",
+    "username": "Waals"
+}
+
+####
+POST http://localhost:8000/api/session HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+xsrf-token:6LpEKzyO-ZFEZZyFrDn0J56PfBPRsw2G5Ubg
+
+{
+    "credential": "walwyde@gmail.com",
+    "password": "password"
+}

@@ -1,7 +1,6 @@
 const express = require("express");
 require("express-async-errors");
 const morgan = require("morgan");
-const body_parser = require("body-parser")
 const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
@@ -17,30 +16,28 @@ const app = express();
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
-app.use(body_parser.urlencoded({extended: true}))
 
-console.log(environment)
+const corsOptions = {
+  origin: isProduction ? "https://your-production-url.com" : "http://localhost:3000",
+  credentials: true,
+};
 
-if (!isProduction) {
-  // enable cors only in development
-  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-}
+app.use(cors(corsOptions));
+
+app.use(
+  helmet.crossOriginResourcePolicy({
+    policy: "cross-origin",
+  })
+);
 
 // Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
     cookie: {
-      secure: isProduction,
-      // sameSite: isProduction && "Lax",
-      sameSite: "none",
-      httpOnly: false,
+      secure: isProduction, // Only set secure in production
+      sameSite: "none", // Allow cross-site requests
+      httpOnly: true, // Ensure the cookie is not accessible via JavaScript
     },
-  })
-);
-
-app.use(
-  helmet.crossOriginResourcePolicy({
-    policy: "cross-origin",
   })
 );
 
