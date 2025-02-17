@@ -35,7 +35,7 @@ app.use(
       secure: isProduction,
       // sameSite: isProduction && "Lax",
       sameSite: "none",
-      httpOnly: false,
+      httpOnly: true,
     },
   })
 );
