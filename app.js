@@ -21,6 +21,11 @@ app.use(body_parser.urlencoded({extended: true}))
 
 console.log(environment)
 
+if (!isProduction) {
+  // enable cors only in development
+  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+}
+
 // Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
@@ -32,10 +37,6 @@ app.use(
     },
   })
 );
-if (!isProduction) {
-  // enable cors only in development
-  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-}
 
 app.use(
   helmet.crossOriginResourcePolicy({
